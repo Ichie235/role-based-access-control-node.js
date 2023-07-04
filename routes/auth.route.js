@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
+const userDetails = require("../models/userDets.model")
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const { ensureLoggedOut, ensureLoggedIn } = require('connect-ensure-login');
@@ -32,6 +33,9 @@ router.get(
   }
 );
 
+
+
+
 router.post(
   '/register',
   ensureLoggedOut({ redirectTo: '/' }),
@@ -50,7 +54,9 @@ router.post(
         return;
       }
 
-      const { email } = req.body;
+      const { email,firstName,lastName } = req.body;
+      console.log(email)
+      console.log(firstName)
       const doesExist = await User.findOne({ email });
       if (doesExist) {
         req.flash('warning', 'Username/email already exists');
@@ -69,6 +75,7 @@ router.post(
     }
   }
 );
+
 
 router.get(
   '/logout',

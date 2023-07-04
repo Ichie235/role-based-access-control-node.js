@@ -1,5 +1,6 @@
 const express = require('express');
 const createHttpError = require('http-errors');
+const cors = require('cors')
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -9,6 +10,8 @@ const passport = require('passport');
 const connectMongo = require('connect-mongo');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const { roles } = require('./utils/constants');
+const forgotPassword = require('./routes/forgotPassword')
+
 
 // Initialization
 const app = express();
@@ -17,6 +20,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 
 const MongoStore = connectMongo(session);
 // Init Session
@@ -64,6 +68,10 @@ app.use(
   ensureAdmin,
   require('./routes/admin.route')
 );
+// Routes
+app.use('/passwordReset',forgotPassword);
+
+
 
 // 404 Handler
 app.use((req, res, next) => {

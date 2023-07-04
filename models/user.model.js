@@ -1,9 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const createHttpError = require('http-errors');
 const { roles } = require('../utils/constants');
 
 const UserSchema = new mongoose.Schema({
+  firstName:{
+    type: String,
+    required: true,
+  },
+  lastName:{
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -44,6 +53,9 @@ UserSchema.methods.isValidPassword = async function (password) {
     throw createHttpError.InternalServerError(error.message);
   }
 };
+
+
+
 
 const User = mongoose.model('user', UserSchema);
 module.exports = User;

@@ -1,7 +1,25 @@
 <%- include('./layouts/header') %>
 
 <h1>Register</h1>
-<form action="/auth/register" method="post" class="lg-form">
+<form action="/auth/register" method="post" id="myForm" class="lg-form" >
+  <div>
+    <label for="firstName">First Name</label>
+    <input
+      type="text"
+      name="firstName"
+      id="firstName"
+      value="<%= locals.firstName ? firstName : '' %>"
+    />
+  </div>
+  <div>
+    <label for="lastName">Last Name</label>
+    <input
+      type="text"
+      name="lastName"
+      id="lastName"
+      value="<%= locals.lastName ? lastName : '' %>"
+    />
+  </div>
   <div>
     <label for="email">Email/Username</label>
     <input
@@ -29,4 +47,6 @@
   </p>
 </div>
 <br />
+
 <%- include('./layouts/footer') %>
+
