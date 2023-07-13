@@ -68,6 +68,11 @@ app.use(
   ensureAdmin,
   require('./routes/admin.route')
 );
+app.use(
+  '/moderator',
+  ensureLoggedIn({ redirectTo: '/auth/login' }),
+  require('./routes/moderator.route')
+)
 // Routes
 app.use('/passwordReset',forgotPassword);
 

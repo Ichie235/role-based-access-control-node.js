@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
-const userDetails = require("../models/userDets.model")
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const { ensureLoggedOut, ensureLoggedIn } = require('connect-ensure-login');
@@ -18,8 +17,8 @@ router.post(
   '/login',
   ensureLoggedOut({ redirectTo: '/' }),
   passport.authenticate('local', {
-    // successRedirect: '/',
-    successReturnToOrRedirect: '/',
+    successRedirect: '/user/profile',
+    //successReturnToOrRedirect: '/user/profile',
     failureRedirect: '/auth/login',
     failureFlash: true,
   })
@@ -55,8 +54,7 @@ router.post(
       }
 
       const { email,firstName,lastName } = req.body;
-      console.log(email)
-      console.log(firstName)
+     
       const doesExist = await User.findOne({ email });
       if (doesExist) {
         req.flash('warning', 'Username/email already exists');
@@ -88,18 +86,3 @@ router.get(
 
 module.exports = router;
 
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     res.redirect('/auth/login');
-//   }
-// }
-
-// function ensureNOTAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     res.redirect('back');
-//   } else {
-//     next();
-//   }
-// }

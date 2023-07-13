@@ -3,14 +3,20 @@
   <ul>
     <li><a href="/">Home</a></li>
     <% if (user) { %>
-    <li><a href="/user/profile">Profile</a></li>
     <% if (user.role === 'ADMIN') { %>
     <li><a href="/admin/users">Manage Users</a></li>
+    <% } else if (user.role === 'MODERATOR') { %>
+    <li><a href="/moderator/profile">Moderator profile</a></li>
+    <% } else { %>
+    <li><a href="/user/profile">Profile</a></li>
+    <li><a href="/user/findModerator">findTutor</a></li>
     <% } %>
     <li><a href="/auth/logout">Logout</a></li>
     <% } else { %>
-    <li><a href="/auth/register">Register</a></li>
-    <li><a href="/auth/login">Login</a></li>
-    <% } %>
+      <li><a href="/auth/register">Register</a></li>
+      <li><a href="/auth/login">Login</a></li>
+      <% } %>
   </ul>
 </nav>
+
+

@@ -1,22 +1,30 @@
 <%- include('./layouts/header') %>
-<h1>Login</h1>
-<form action="/passwordReset/forgot" method="post" class="lg-form">
-  <div>
-    <h3>please enter your email to reset password</h3>
-    <label for="email">Email/Username</label>
-    <input type="email" name="email" id="email" />
-  </div>
-  <div>
-    <input type="submit" value="submit" />
-  </div>
-
-</form>
-
 <div>
- 
-  <p>
-    Don't have an account? <span><a href="/auth/register">Register</a></span>
-  </p>
+  <% if (typeof successMessage === 'undefined') { %>
+
+  <h2>please enter your email to reset password</h2>
+  <form action="/passwordReset/forgot" method="post" class="lg-form">
+    <div>
+      <label for="email">Email/Username</label>
+      <input type="email" name="email" id="email" />
+    </div>
+    <div>
+      <input type="submit" value="submit" />
+    </div>
+  </form>
+
+  <div>
+    <p>
+      Don't have an account? <span><a href="/auth/register">Register</a></span>
+    </p>
+  </div>
+  <br />
+  <% } else { %>
+  <div>
+    <div class="success-message" style="color: green">
+      <h1><%= successMessage %></h1>
+    </div>
+    <% } %>
+  </div>
 </div>
-<br />
 <%- include('./layouts/footer') %>

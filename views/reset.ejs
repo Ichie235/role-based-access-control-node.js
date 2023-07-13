@@ -1,25 +1,20 @@
 <%- include('./layouts/header') %>
-<h1>Login</h1>
-<form action="/passwordReset/reset" method="post" class="lg-form">
+<h1>Change password</h1>
+<form action="/passwordReset/:userId/:token" method="post" class="lg-form">
   <div>
-    <h3>enter new password</h3>
-    <label for="password">Email/Username</label>
+    <label for="password">password</label>
     <input type="password" name="password" id="password2" />
   </div>
   <div>
-    <h3>confirm password</h3>
-    <label for="password2">Email/Username</label>
+    <label for="password2">Confirm password</label>
     <input type="password" name="password2" id="password2" />
   </div>
   <div>
     <input type="submit" value="submit" />
   </div>
-
- 
 </form>
 
 <div>
- 
   <p>
     Don't have an account? <span><a href="/auth/register">Register</a></span>
   </p>

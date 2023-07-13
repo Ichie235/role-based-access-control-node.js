@@ -1,0 +1,27 @@
+<%- include('./layouts/header') %>
+  <h1>Find Tutors</h1>
+
+  <% if (moderators.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% moderators.forEach((moderator) => { %>
+          <tr>
+            <td><%= moderator.firstName %></td>
+            <td><%= moderator.lastName %></td>
+            <td><%= moderator.email %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No moderators found.</p>
+  <% } %>
+</body>
+
