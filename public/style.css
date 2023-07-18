@@ -156,9 +156,6 @@ thead th:nth-child(1) {
   max-width: 44px;
 }
 
-tbody tr:hover {
-  /* background-color: #fdf2f8; */
-}
 
 tbody tr td {
   padding: 8px 0;
@@ -247,4 +244,71 @@ ul.messages * {
 }
 .messages .info {
   background-color: #93c5fd;
+}
+
+
+.button {
+  display: inline-block;
+  border: 2px solid pink;
+  background-color: rgb(218, 106, 183);
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: lightpink;
+}
+
+#personalForm{
+position: relative;
+}
+
+form input[type="text"] {
+  width: 190px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid pink;
+  border-radius: 4px;
+}
+form input[type="password"] {
+  width: 190px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid pink;
+  border-radius: 4px;
+}
+form input[type="email"] {
+  width: 190px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid pink;
+  border-radius: 4px;
+}
+
+form input[type="tel"] {
+  width: 190px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid pink;
+  border-radius: 4px;
+}
+form input[type="number"] {
+  width: 190px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid pink;
+  border-radius: 4px;
+}
+/* deactivate input field */
+.deactivated-input {
+  pointer-events: none;
+  background-color: lightgray;
+}
+.editBtn{
+  position: absolute;
+  bottom: 4.6%;
+  left: 36.5%;
 }

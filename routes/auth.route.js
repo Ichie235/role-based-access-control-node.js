@@ -62,6 +62,7 @@ router.post(
         return;
       }
       const user = new User(req.body);
+          user.createdAt = Date.now()
       await user.save();
       req.flash(
         'success',

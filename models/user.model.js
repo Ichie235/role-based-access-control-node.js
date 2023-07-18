@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
-const createHttpError = require('http-errors');
-const { roles } = require('../utils/constants');
+const bcrypt = require("bcrypt");
+const Courses = require("./courses.model")
+const createHttpError = require("http-errors");
+const { roles } = require("../utils/constants");
 
 const UserSchema = new mongoose.Schema({
-  firstName:{
+  firstName: {
     type: String,
     required: true,
   },
-  lastName:{
+  lastName: {
     type: String,
     required: true,
   },
@@ -28,9 +29,33 @@ const UserSchema = new mongoose.Schema({
     enum: [roles.admin, roles.moderator, roles.client],
     default: roles.client,
   },
+  street: {
+    type: String,
+    lowercase: true,
+  },
+  town: {
+    type: String,
+    lowercase: true,
+  },
+  country: {
+    type: String,
+    lowercase: true,
+  },
+  postcode: {
+    type: String,
+    lowercase: true,
+  },
+  selectedCourses: [
+    {
+      course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+      level: String,
+    },
+  ],
+  createdAt: { type: Date},
+  updatedAt: { type: Date, default: Date.now },
 });
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function (next) {
   try {
     if (this.isNew) {
       const salt = await bcrypt.genSalt(10);
@@ -46,6 +71,7 @@ UserSchema.pre('save', async function (next) {
   }
 });
 
+// Check if password is valid
 UserSchema.methods.isValidPassword = async function (password) {
   try {
     return await bcrypt.compare(password, this.password);
@@ -54,8 +80,17 @@ UserSchema.methods.isValidPassword = async function (password) {
   }
 };
 
+// Create a virtual property to combine course name and ObjectId
+UserSchema.virtual('selectedCoursesWithDetails').get(function () {
+  return this.selectedCourses.map((selectedCourse) => {
+    const course = Courses.findById(selectedCourse.course);
+    return {
+      courseName: course.name,
+      courseId: selectedCourse.course,
+      level: selectedCourse.level,
+    };
+  });
+});
 
-
-
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model("user", UserSchema);
 module.exports = User;

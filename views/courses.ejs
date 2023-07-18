@@ -1,0 +1,41 @@
+<%- include('./layouts/header') %>
+<h2>Course Selection</h2>
+<form action="/user/courses/send" method="POST">
+  <% if (courses && user && user.selectedCourses) { %>
+    <% courses.forEach((course) => { %>
+      <div>
+        <input type="checkbox" name="selectedCourses" value="<%= course._id %>"
+          <% if (user.selectedCourses.some((selectedCourse) => selectedCourse.course && selectedCourse.course.toString() === course._id.toString())) { %>
+            checked
+          <% } %>
+        >
+        <label><%= course.name %></label>
+      </div>
+    <% }); %>
+  <% } %>
+  
+  <button type="submit">Save Selection</button>
+</form>
+
+<%- include('./layouts/footer') %>
+
+<script>
+  // Preserve checkbox state on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          localStorage.setItem(checkbox.value, true);
+        } else {
+          localStorage.removeItem(checkbox.value);
+        }
+      });
+
+      const isChecked = localStorage.getItem(checkbox.value);
+      checkbox.checked = isChecked === 'true';
+    });
+  });
+</script>
+
+

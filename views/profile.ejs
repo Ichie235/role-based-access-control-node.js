@@ -1,5 +1,4 @@
 <%- include('./layouts/header') %>
-
 <h1><span class="goback" onclick="window.history.back()">←</span> Profile</h1>
 
 <div class="profile">
@@ -19,5 +18,187 @@
     <p class="title">User object</p>
     <pre class="subtitle"><%= person %></pre>
   </div>
+
+  <div>
+    <button class="button" onclick="toggleForm('personalForm', 'paymentForm')">
+      Personal
+    </button>
+    <button class="button" onclick="toggleForm('paymentForm', 'personalForm')">
+      Payment
+    </button>
+  </div>
+
+  <div id="personalForm" style="display: none">
+    <h2>Personal Details</h2>
+    <form action="/user/account/personal-details" method="post" class="lg-form">
+      <h3>Change password</h3>
+      <p>
+        To change your password, simply click on the edit button below and enter
+        a new password in both fields and click save.
+      </p>
+      <label for="password">password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        readonly
+        class="deactivated-input"
+      /><br />
+
+      <label for="password2">Confirm password:</label>
+      <input
+        type="password"
+        id="password2"
+        name="password2"
+        readonly
+        class="deactivated-input"
+      /><br />
+      <!-- /// -->
+      <h3>Name</h3>
+      <label for="firstName">First Name:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        value="<%= person.firstName %>"
+        disabled
+      /><br />
+
+      <label for="lastName">Last Name:</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        value="<%= person.lastName %>"
+        disabled
+      /><br />
+      <!-- ///// -->
+      <h3>Contact</h3>
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="<%= person.email %>"
+        disabled
+      /><br />
+
+      <label for="PhoneNumber">Phone Number:</label>
+      <input
+        type="tel"
+        id="tel"
+        name="PhoneNumber"
+        value="8908989089"
+        disabled
+      /><br />
+      <!-- ///// -->
+      <h3>Address</h3>
+      <label for="street">Street:</label>
+      <input
+        type="text"
+        id="street"
+        name="street"
+        value="<%= person.street %>"
+        readonly
+        class="deactivated-input"
+      /><br />
+
+      <label for="Town">Town:</label>
+      <input
+        type="text"
+        id="Town"
+        name="town"
+        value="<%= person.town %>"
+        readonly
+        class="deactivated-input"
+      /><br />
+
+      <div>
+        <label for="Country">Country:</label>
+        <input
+          type="text"
+          id="Country"
+          name="country"
+          value="<%= person.country %>"
+          readonly
+          class="deactivated-input"
+        />
+      </div>
+
+      <label for="postcode">Postcode:</label>
+      <input
+        type="text"
+        id="postcode"
+        name="postcode"
+        value="<%= person.postcode %>"
+        readonly
+        class="deactivated-input"
+      /><br />
+
+      <button type="submit" class="button">Save</button>
+    </form>
+    <button id="editButton" onclick="toggleEditForm()" class="button editBtn">
+      Edit
+    </button>
+  </div>
+
+  <!-- PAYMENT PLATFORM -->
+  <div id="paymentForm" style="display: none">
+    <form class="lg-form">
+      <label for="cardNumber">Card Number:</label><br />
+      <input type="text" id="cardNumber" name="cardNumber" /><br />
+
+      <label for="expiryDate">Expiry Date:</label><br />
+      <input type="text" id="expiryDate" name="expiryDate" /><br />
+
+      <label for="cvv">CVV:</label><br />
+      <input type="text" id="cvv" name="cvv" /><br />
+
+      <label for="billingAddress">Billing Address:</label><br />
+      <input type="text" id="billingAddress" name="billingAddress" /><br />
+
+      <button type="submit" class="button">Save</button>
+    </form>
+  </div>
 </div>
 <%- include('./layouts/footer') %>
+
+<script>
+  function toggleEditForm() {
+    let passwordInput = document.getElementById("password");
+    let password2Input = document.getElementById("password2");
+    let streetInput = document.getElementById("street");
+    let townInput = document.getElementById("Town");
+    let countryInput = document.getElementById("Country");
+    let postcodeInput = document.getElementById("postcode");
+    let editButton = document.getElementById("editButton");
+
+    passwordInput.classList.toggle("deactivated-input")
+    password2Input.classList.toggle("deactivated-input")
+    streetInput.classList.toggle("deactivated-input");
+    townInput.classList.toggle("deactivated-input");
+    countryInput.classList.toggle("deactivated-input");
+    postcodeInput.classList.toggle("deactivated-input");
+    
+    passwordInput.removeAttribute("readonly");
+    password2Input.removeAttribute("readonly");
+    streetInput.removeAttribute("readonly");
+    townInput.removeAttribute("readonly");
+    countryInput.removeAttribute("readonly");
+    postcodeInput.removeAttribute("readonly");
+
+    if (editButton.innerHTML === "Edit") {
+      editButton.innerHTML = "Cancel";
+    } else {
+      editButton.innerHTML = "Edit";
+    }
+  }
+</script>
+<script>
+  function toggleForm(formId, otherFormId) {
+    var form = document.getElementById(formId);
+    var otherForm = document.getElementById(otherFormId);
+    form.style.display = form.style.display === "none" ? "block" : "none";
+    otherForm.style.display = "none";
+  }
+</script>

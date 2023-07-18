@@ -8,3 +8,12 @@
   </ul>
 </div>
 <% } %>
+<script>
+  // Clear flash messages after 6 seconds
+  setTimeout(function() {
+    var messagesContainer = document.querySelector('.messages');
+    if (messagesContainer) {
+      messagesContainer.style.display = 'none';
+    }
+  }, 3000);
+</script>
