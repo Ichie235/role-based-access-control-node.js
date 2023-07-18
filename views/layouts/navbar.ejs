@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <nav>
   <h2>AVVIC</h2>
   <ul>
@@ -22,3 +23,27 @@
 </nav>
 
 
+=======
+<nav>
+  <h2>AVVIC</h2>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <% if (user) { %>
+    <% if (user.role === 'ADMIN') { %>
+    <li><a href="/admin/users">Manage Users</a></li>
+    <% } else if (user.role === 'MODERATOR') { %>
+    <li><a href="/moderator/profile">Moderator profile</a></li>
+    <% } else { %>
+    <li><a href="/user/profile">Profile</a></li>
+    <li><a href="/user/findModerator">findTutor</a></li>
+    <% } %>
+    <li><a href="/auth/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/auth/register">Register</a></li>
+      <li><a href="/auth/login">Login</a></li>
+      <% } %>
+  </ul>
+</nav>
+
+
+>>>>>>> a4bd8598d7abf7504cdab1614c408581e0d6bb45
