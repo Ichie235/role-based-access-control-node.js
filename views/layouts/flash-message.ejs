@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <% if (locals.messages) { %>
 <div class="messages">
   <ul class="messages">
@@ -18,15 +17,4 @@
     }
   }, 3000);
 </script>
-=======
-<% if (locals.messages) { %>
-<div class="messages">
-  <ul class="messages">
-    <% Object.keys(messages).forEach((key) => { %> <%
-    messages[key].forEach((message) => { %>
-    <li class="<%= key %>"><%= message %></li>
-    <% }) %> <% }) %>
-  </ul>
-</div>
-<% } %>
->>>>>>> a4bd8598d7abf7504cdab1614c408581e0d6bb45
+
