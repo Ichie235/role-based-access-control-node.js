@@ -45,12 +45,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
-  selectedCourses: [
-    {
-      course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
-      level: String,
-    },
-  ],
   createdAt: { type: Date},
   updatedAt: { type: Date, default: Date.now },
 });

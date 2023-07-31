@@ -13,6 +13,7 @@ const { roles } = require('./utils/constants');
 const forgotPassword = require('./routes/forgotPassword')
 
 
+
 // Initialization
 const app = express();
 app.use(morgan('dev'));
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
 
 // Connect Flash
 app.use(connectFlash());

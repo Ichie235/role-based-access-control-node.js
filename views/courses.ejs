@@ -1,4 +1,4 @@
-<%- include('./layouts/header') %>
+<!-- <%- include('./layouts/header') %>
 <h2>Course Selection</h2>
 <form action="/user/courses/send" method="POST">
   <% if (courses && user && user.selectedCourses) { %>
@@ -36,6 +36,29 @@
       checkbox.checked = isChecked === 'true';
     });
   });
-</script>
+</script> -->
 
+<%- include('./layouts/header') %>
+<h1>Available Courses</h1>
+<% if (selectedCourses.length > 0) { %>
+  <h2>Selected Courses:</h2>
+  <ul>
+    <% selectedCourses.forEach(course => { %>
+      <li><%= course.name %></li>
+    <% }); %>
+  </ul>
+<% } %>
 
+<h2>All Courses:</h2>
+<form action="/user/courses/send" method="post">
+  <ul>
+    <% courses.forEach(course => { %>
+      <li>
+        <input type="checkbox" name="selectedCourses" value="<%= course._id %>" <% if (selectedCourses.find(selected => selected.equals(course._id))) { %>checked<% } %>>
+        <%= course.name %>
+      </li>
+    <% }); %>
+  </ul>
+  <button type="submit">Save Selection</button>
+</form>
+<%- include('./layouts/footer') %>

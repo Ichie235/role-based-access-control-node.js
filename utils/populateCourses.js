@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Course = require('../models/courses.model');
-
+require('dotenv').config();
 
 
 // Making a connection to MongoDB
-mongoose.connect("mongodb://localhost:27017/roleBasedAuth", {
+mongoose.connect("mongodb://localhost:27017", {
+  dbName:"roleBasedAuth",
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -18,8 +19,10 @@ mongoose.connect("mongodb://localhost:27017/roleBasedAuth", {
 
 const populateCourses = () => {
     const courseData = [
-      { name: 'English', description: 'English language course', instructor: 'John Doe', level: 'Beginner', duration: '4 weeks' },
+      { name: 'English', description: 'English language course', level: 'Beginner', duration: '4 weeks' },
       { name: 'Mathematics', description: 'Mathematics course', instructor: 'Jane Smith', level: 'Intermediate', duration: '6 weeks' },
+      { name: 'computer science', description: 'computer course', instructor: 'Jane Smith', level: 'Intermediate', duration: '6 weeks' },
+      { name: 'Chemistry', description: 'Chemistry course', instructor: 'Jane Smith', level: 'Intermediate', duration: '6 weeks' },
       // Add more course data as needed
     ];
 

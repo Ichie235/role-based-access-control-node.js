@@ -1,6 +1,20 @@
 <%- include('./layouts/header') %>
   <h1>Find Tutors</h1>
-
+  <div class="search-container">
+    <form id="searchForm" action="/user/findModerator" method="post">
+  <input type="search" name="selectedCourses" class="search-input" placeholder="enter course...">
+  <select name="level" id="level" class="select-input">
+    <option value="select">Select level:</option>
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="advanced">Advanced</option>
+  </select>
+  <button type="submit" class="submit-button submit-button-search">Search</button>
+</form>
+</div>
+<div id="result">
+  <!-- The search results will be displayed here -->
+</div>
   <% if (moderators.length > 0) { %>
     <table>
       <thead>
@@ -23,5 +37,53 @@
   <% } else { %>
     <p>No moderators found.</p>
   <% } %>
-</body>
 
+  
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/user/findModerator', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Error fetching moderators.');
+        }
+
+        const moderators = await response.json();
+        displayResults(moderators);
+      } catch (error) {
+        console.error(error);
+        displayError('Error fetching moderators.');
+      }
+    });
+
+    function displayResults(moderators) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+
+      if (moderators.length === 0) {
+        resultDiv.textContent = 'No moderators found.';
+      } else {
+        const list = document.createElement('ul');
+        moderators.forEach((moderator) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = moderator;
+          list.appendChild(listItem);
+        });
+        resultDiv.appendChild(list);
+      }
+    }
+
+    function displayError(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<p>${message}</p>`;
+    }
+  </script>
+</body>

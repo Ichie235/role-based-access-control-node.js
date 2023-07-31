@@ -195,15 +195,17 @@ tbody tr td:first-child {
 }
 
 .profile {
-  min-width: 600px;
+ width: 95%;
   padding: 16px;
   border: 4px solid #d1d5db;
   border-radius: 16px;
   margin-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .profile > div {
-  padding: 16px;
+  padding: 10px;
 }
 
 .profile .title {
@@ -301,6 +303,50 @@ form input[type="number"] {
   margin-bottom: 8px;
   border: 2px solid pink;
   border-radius: 4px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 150px;
+  border: 2px solid pink;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none; /* Remove the default outline on focus */
+}
+.submit-button-search {
+  margin-left: 8px;
+  padding: 8px 16px;
+  background-color: pink;
+  color: white;
+  border: 2px solid pink;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none; /* Remove the default outline on focus */
+}
+.submit-button-search:hover {
+  background-color: white;
+  color: pink;
+}
+.select-input {
+  width: 130px;
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid pink;
+  border-radius: 4px;
+  outline: none; /* Remove the default outline on focus */
+}
+
+.select-input::-ms-expand {
+  display: none; 
+}
+
+.select-input option {
+  background-color: white; 
 }
 /* deactivate input field */
 .deactivated-input {
