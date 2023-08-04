@@ -10,7 +10,7 @@ const passport = require('passport');
 const connectMongo = require('connect-mongo');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const { roles } = require('./utils/constants');
-const forgotPassword = require('./routes/forgotPassword')
+const forgotPassword = require('./routes/forgotPassword.route')
 
 
 

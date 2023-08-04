@@ -18,6 +18,26 @@ const ModeratorSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
+  experience:{ 
+    type: Number,
+  },
+  availability: {
+    type:String,
+    lowercase:true
+  },
+  rate:{
+    type: Number,
+  },
+  paymentInfo: {
+   type: String,
+  },
+  specializations: {
+   type: String,
+    lowercase: true
+  },
+  visibility: {
+   type: Boolean,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
