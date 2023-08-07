@@ -1,8 +1,49 @@
 <%- include('./layouts/header') %>
+<script>
+  $(document).ready(function() {
+    $('.visibility-checkbox').on('change', function() {
+      const moderatorId = $(this).attr('id');
+      const visibility = $(this).is(':checked');
+
+      $.ajax({
+        type: 'PUT', 
+        url: `/moderator/mode/${moderatorId}/visibility`,
+        data: { visibility },
+        success: function(data) {
+          console.log('Visibility updated successfully');
+        },
+        error: function(error) {
+          console.error('Error updating visibility:', error);
+        }
+      });
+    });
+  });
+</script>
 
 <h1><span class="goback" onclick="window.history.back()">←</span> Profile</h1>
 
 <div class="profile">
+
+  <!-- profile visibility -->
+<div>
+  <label><h3>Profile Visibility:</h3></label>
+  <div>
+    <p>select to turn off visibility to clients</p>
+    <input type="checkbox" name="visibility" class="visibility-checkbox" id="<%= moderators._id %>" <% if (moderators.visibility) { %> checked <% } %>> 
+
+  </div>
+</div>
+<!-- visibility confirmation -->
+<div>
+  <label>Profile Visibility:</label>
+  <% if(moderators.visibility) { %>
+    <p>Visible to others</p>
+  <% } else { %>
+    <p>Not visible to others</p>
+  <% } %>
+</div>
+<!-- Other form fields... -->
+
   <div>
     <p class="title">ID</p>
     <p class="subtitle"><%= person.id %></p>
@@ -146,39 +187,91 @@
 <!-- moderator qualification  edit -->
 <div id="paymentForm" style="display: none">
   <form action="/moderator/qualifications" method="post" class="lg-form">
-    <div>
-    <label for="subjects">Subjects:</label>
-    <input type="text" name="subjects" value="">
-  </div>
+    <label>Selecte Courses that best fit your qualification:</label>
+    <div class="moderatorSelectCourses">
+      
+      <% Course.forEach(course => { %>
+        <label><%= course.name %></label>
+          <input
+            type="checkbox"
+            name="selectedCourses"
+            value="<%= course._id %>"
+            <% if (moderators.selectedCourses.find(selCourse => selCourse.course._id.toString() === course._id.toString())) { %>
+              checked
+            <% } %>
+          >     
+      <% }) %>
+    </div>
   <div>
     <label for="qualifications">Qualifications:</label>
-    <input type="text" name="qualification" value="<%=Moderator.qualification%>">
+    <input type="text" name="qualification" id="qualification" value="<%= moderators.qualification %>" readonly class="deactivated-input">
   </div>
   <div>
     <label for="experience">Experience (in years):</label>
-    <input type="number" name="experience" value="">
+    <input type="number" name="experience" id="experience" value="<%= moderators.experience %>" readonly class="deactivated-input">
   </div>
-  <div>
-    <label for="availability">Availability:</label>
-    <input type="text" name="availability" value="">
+  <label for="availability">Availability:</label>
+  <div class="">
+    Monday<input type="checkbox" name="availability" value="monday"  <% if (moderators.availability.includes('monday')) { %> checked <% } %>> 
+    Tuesday <input type="checkbox" name="availability" value="tuesday"  <% if (moderators.availability.includes('tuesday')) { %> checked <% } %>> 
+    wednesday <input type="checkbox" name="availability" value="wednesday"  <% if (moderators.availability.includes('wednesday')) { %> checked <% } %>> 
+    Thursday <input type="checkbox" name="availability" value="Thursday"  <% if (moderators.availability.includes('Thursday')) { %> checked <% } %>> 
+      Friday  <input type="checkbox" name="availability" value="friday"  <% if (moderators.availability.includes('friday')) { %> checked <% } %>> 
+      Saturday <input type="checkbox" name="availability" value="saturday"  <% if (moderators.availability.includes('saturday')) { %> checked <% } %>> 
+      Sunday <input type="checkbox" name="availability" value="sunday"  <% if (moderators.availability.includes('sunday')) { %> checked <% } %>> 
+   
   </div>
   <div>
     <label for="rate">Rate (per hour):</label>
-    <input type="number" step="0.01" name="rate" value="">
+    <input type="number" step="0.01" name="rate" id="rate" value="<%= moderators.rate %>" readonly class="deactivated-input">
   </div>
   <div>
     <label for="paymentInfo">Payment Information:</label>
-    <input type="text" name="paymentInfo" value="">
+    <input type="text" name="paymentInfo" id="paymentInfo" readonly value="">
   </div>
   <div>
     <label for="specializations">Specializations:</label>
-    <input type="text" name="specializations" value="">
+    <input type="text" name="specializations"  id="specializations" value="<%= moderators.specializations %>" readonly class="deactivated-input">
   </div>
     <button type="submit" class="button">Save</button>
   </form>
+  <button id="editButton2" onclick="toggleEditModeratorQualification()" class="button editBtnModerator">
+    Edit
+  </button>
 </div>
 </div>
 <%- include('./layouts/footer') %>
+<script>
+  function toggleEditModeratorQualification(){
+    
+  let qualificationInput = document.getElementById("qualification");
+  let experienceInput = document.getElementById("experience");
+  let rateInput = document.getElementById("rate");
+  let paymentInfoInput = document.getElementById("paymentInfo");
+  let specializationsInput = document.getElementById("specializations");
+  let editButton2 = document.getElementById("editButton2");
+
+  qualificationInput.classList.toggle("deactivated-input");
+  experienceInput.classList.toggle("deactivated-input");
+  rateInput.classList.toggle("deactivated-input");
+  paymentInfoInput.classList.toggle("deactivated-input");
+  specializationsInput.classList.toggle("deactivated-input");
+
+  
+  qualificationInput.removeAttribute("readonly");
+  experienceInput.removeAttribute("readonly");
+  rateInput.removeAttribute("readonly");
+  paymentInfoInput.removeAttribute("readonly");
+  specializationsInput.removeAttribute("readonly");
+ 
+  if (editButton2.innerHTML === "Edit") {
+    editButton2.innerHTML = "Cancel";
+  } else {
+    editButton2.innerHTML = "Edit";
+  }
+
+  }
+</script>
 
 <script>
 function toggleEditForm() {
@@ -189,6 +282,7 @@ function toggleEditForm() {
   let countryInput = document.getElementById("Country");
   let postcodeInput = document.getElementById("postcode");
   let editButton = document.getElementById("editButton");
+  
 
   passwordInput.classList.toggle("deactivated-input")
   password2Input.classList.toggle("deactivated-input")
@@ -197,6 +291,7 @@ function toggleEditForm() {
   countryInput.classList.toggle("deactivated-input");
   postcodeInput.classList.toggle("deactivated-input");
   
+ 
   passwordInput.removeAttribute("readonly");
   password2Input.removeAttribute("readonly");
   streetInput.removeAttribute("readonly");

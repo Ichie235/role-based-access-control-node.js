@@ -1,7 +1,9 @@
-const router = require('express').Router();
-const accountController = require("../controller/clientController/accountController")
-const Moderator = require("../models/moderator.model")
-const mongoose = require('mongoose');
+const router = require("express").Router();
+const accountController = require("../controller/clientController/accountController");
+const { updateVisibility } = require('../controller/moderatorController/updateModeratorVisibility');
+const { updateQualifications } = require('../controller/moderatorController/updateQualification');
+const Moderator = require("../models/moderator.model");
+const Courses = require("../models/courses.model");
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -12,38 +14,29 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-router.get('/profile', async (req, res, next) => {
-  // console.log(req.user);
-  const person = req.user;
-  res.render('moderator', { person, Moderator });
-});
-
-router.post("/account/personal-details", accountController.updatePersonalDetails);
-router.post('/qualifications', isAuthenticated, async (req, res) => {
-  const email = req.user.email; 
-  console.log(email);
+router.get("/profile", async (req, res, next) => {
   try {
-    const moderator = await Moderator.findOne({ email: email });
-
-    // Update the moderator's qualifications from req.body
-    moderator.qualification = req.body.qualification;
-
-    // Uncomment and update other fields if needed
-    // moderator.experience = parseInt(req.body.experience);
-    // moderator.availability = req.body.availability;
-    // moderator.specializations = req.body.specializations;
-    // moderator.rate = parseFloat(req.body.rate);
-    // moderator.paymentInfo = req.body.paymentInfo;
-    // moderator.visibility = req.body.visibility === 'true';
-
-    await moderator.save();
-    req.flash("success", "Qualifications updated successfully");
-    res.redirect("/moderator/profile");
-  }  catch (err) {
-    console.error(err);
-    req.flash("error", "Internal Server Error");
-    res.redirect("/moderator/profile");
+    const person = req.user;
+    // Fetch all moderator data
+    const moderators = await Moderator.findOne({ user: req.user }).populate(
+      "selectedCourses.course"
+    );
+    const Course = await Courses.find();
+    res.render("moderator", { person, moderators, Course });
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 });
+
+router.post(
+  "/account/personal-details",
+  accountController.updatePersonalDetails
+);
+
+// Use the controller function for updating qualifications
+router.post('/qualifications', updateQualifications);
+
+router.put('/mode/:id/visibility', isAuthenticated, updateVisibility);
 
 module.exports = router;

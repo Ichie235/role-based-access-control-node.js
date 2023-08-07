@@ -18,26 +18,25 @@ const ModeratorSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
-  experience:{ 
+  experience: {
     type: Number,
   },
-  availability: {
-    type:String,
-    lowercase:true
-  },
-  rate:{
+  availability: [{ 
+    type: String, lowercase: true 
+  }],
+  rate: {
     type: Number,
   },
   paymentInfo: {
-   type: String,
+    type: String,
   },
   specializations: {
-   type: String,
-    lowercase: true
+    type: String,
+    lowercase: true,
   },
   visibility: {
-   type: Boolean,
-  },
+     type: Boolean, default: true 
+    },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -45,6 +44,7 @@ const ModeratorSchema = new mongoose.Schema({
   selectedCourses: [
     {
       course: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
+      name: String,
     },
   ],
   level: {

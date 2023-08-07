@@ -62,7 +62,7 @@ const handleCourseSelection = async (req, res) => {
     await client.save();
 
     console.log("Course selection saved:", client);
-    res.redirect("/");
+    res.redirect("/user/courses");
   } catch (error) {
     console.error("Error saving course selection:", error);
     res.redirect("/error");

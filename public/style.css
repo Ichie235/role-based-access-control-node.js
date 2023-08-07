@@ -358,7 +358,17 @@ form input[type="number"] {
   bottom: 4.6%;
   left: 36.5%;
 }
+.editBtnModerator{
+  position: absolute;
+  bottom: -173.6%;
+  left: 45.5%;
+}
 
+.moderatorSelectCourses{
+  display: flex;
+  gap: 3.1em;
+  width: 25px;
+}
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
